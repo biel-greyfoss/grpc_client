@@ -9,7 +9,7 @@ import helloworld_pb2
 import helloworld_pb2_grpc
 import os
 
-server_name = os.getenv("SERVER_NAME", "grpc_server")
+server_name = os.getenv("SERVER_NAME", "grpc-server")
 
 
 async def send_message(name) -> None:
