@@ -7,26 +7,23 @@ from fastapi import APIRouter
 
 import helloworld_pb2
 import helloworld_pb2_grpc
+import os
 
+server_name = os.getenv("SERVER_NAME", "grpc_server")
 
-
-
-server_name = os.getenv("SERVER_NAME", "greet_java")
 
 async def send_message(name) -> None:
-	print(f'with server name:{server_name}')
+    print(f'with server name:{server_name}')
     async with grpc.aio.insecure_channel(f'{server_name}:50051') as channel:
         stub = helloworld_pb2_grpc.GreeterStub(channel)
         response = await stub.SayHello(helloworld_pb2.HelloRequest(name=name))
     print("Greeter client received: " + response.message)
 
 
-RPEFIX = "/hello"
 
-app = FastAPI(openapi_url=f"{PREFIX}/openapi.json", docs_url=f"{PREFIX}/docs")
+app = FastAPI(openapi_url=f"/hello/openapi.json", docs_url=f"/hello/docs")
 
 router = APIRouter()
-
 
 
 @router.get("/send")
@@ -38,8 +35,6 @@ def send(msg: str):
 
 app.include_router(
     router,
-    prefix=PREFIX
+    prefix='/hello'
 )
-
-
 
