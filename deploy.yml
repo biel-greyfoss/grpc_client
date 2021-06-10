@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: grpc-client
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
-      port: 58080
+      port: 8080
       targetPort: 8080
+      nodePort: 58080
   selector:
     app: grpc-client
 ---
